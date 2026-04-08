@@ -193,7 +193,10 @@ footer a:hover{color:var(--ink);}
 
 @media(max-width:1024px){
   .hero-inner,.about-grid,.exp-layout,.contact-grid,.cert-layout,.edu-grid{grid-template-columns:1fr;}
-  .hero-right,.hero-sidebar{display:none;}
+  .hero-sidebar{display:none;}
+  .hero-right{display:flex;justify-content:center;height:auto;margin-top:20px;}
+  .photo-wrap{width:260px;height:360px;}
+  .exp-badge{display:none;}
   .exp-sticky{position:static;}
   .exp-cards{grid-template-columns:1fr 1fr;}
   .exp-card:nth-child(2){border-right:none;}
