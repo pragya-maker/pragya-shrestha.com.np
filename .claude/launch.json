@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Static Site (index.html)",
+      "runtimeExecutable": "preview",
+      "runtimeArgs": ["index.html"],
+      "port": 5500
+    }
+  ]
+}
