@@ -166,7 +166,7 @@ section{padding:90px 0;transition:background .4s;}
 /* (Form section removed) */
 
 /* REFERENCE CARDS */
-.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px;align-items:start;}
+.ref-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;align-items:start;}
 .ref-card{background:var(--card);border-left:3px solid var(--line2);border-radius:0;padding:24px 28px;transition:background .4s,border-color .4s;}
 .ref-card:hover{border-left-color:var(--acc);}
 .ref-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
@@ -208,7 +208,7 @@ footer a:hover{color:var(--ink);}
 @media(max-width:600px){
   section{padding:50px 0;}
   .stat-row{grid-template-columns:1fr 1fr;}
-  .sk-grid,.exp-cards{grid-template-columns:1fr;}
+  .sk-grid,.exp-cards,.ref-grid{grid-template-columns:1fr;}
   .sec-w,.nav-w,footer{padding-left:16px;padding-right:16px;}
   .hero-inner{padding:0 16px;gap:24px;}
   .hero-left{padding:20px 0;}
