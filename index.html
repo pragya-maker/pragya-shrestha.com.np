@@ -136,17 +136,7 @@ section{padding:90px 0;transition:background .4s;}
 .tl-desc ul li{padding-left:18px;position:relative;}
 .tl-desc ul li::before{content:'•';position:absolute;left:0;color:var(--muted);font-size:1rem;line-height:1.6;}
 
-/* EDUCATION & LANGUAGES */
-#education{background:var(--bg);}
-.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;}
-.lang-row{display:flex;flex-direction:column;gap:1px;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:32px;}
-.lang-item{background:var(--card);padding:18px 24px;display:flex;justify-content:space-between;align-items:center;transition:background .4s;}
-.lang-item:not(:last-child){border-bottom:1px solid var(--line);}
-.lang-name{font-size:.94rem;font-weight:400;color:var(--ink);}
-.lang-level{font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
-.skills-wrap{display:flex;flex-wrap:wrap;gap:7px;}
-.sk-pill{border:1px solid var(--line2);color:var(--muted);padding:4px 11px;border-radius:3px;font-size:.68rem;font-weight:400;letter-spacing:.03em;transition:color .2s,border-color .2s;cursor:default;}
-.sk-pill:hover{color:var(--ink);border-color:var(--ink2);}
+/* (Education section removed) */
 
 /* SKILLS */
 #skills{background:var(--bg2);}
@@ -160,16 +150,7 @@ section{padding:90px 0;transition:background .4s;}
 .sk-tag{border:1px solid var(--line2);color:var(--muted);padding:3px 9px;border-radius:3px;font-size:.65rem;font-weight:400;transition:color .2s,border-color .2s;cursor:default;}
 .sk-tag:hover{color:var(--ink);border-color:var(--ink2);}
 
-/* CERTIFICATIONS */
-#certifications{background:var(--bg);}
-.cert-layout{display:grid;grid-template-columns:260px 1fr;gap:72px;align-items:start;}
-.cert-intro-text{font-size:.84rem;line-height:1.76;color:var(--muted);font-weight:300;}
-.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
-.cert-card{background:var(--card);padding:16px 18px;display:flex;align-items:flex-start;gap:12px;transition:background .2s;}
-.cert-card:hover{background:var(--acc-lt);}
-.cert-num{font-family:'Cormorant Garamond',serif;font-size:.96rem;font-weight:300;color:var(--line2);min-width:24px;margin-top:1px;}
-.cert-name{font-size:.8rem;font-weight:400;color:var(--ink);line-height:1.42;}
-.cert-by{font-size:.66rem;color:var(--muted);margin-top:3px;}
+/* (Certifications section removed) */
 
 /* CONTACT */
 #contact{background:var(--bg2);}
@@ -181,14 +162,19 @@ section{padding:90px 0;transition:background .4s;}
 .c-val{font-size:.86rem;color:var(--ink);font-weight:300;}
 .c-val a{color:var(--ink);text-decoration:none;}
 .c-val a:hover{text-decoration:underline;}
-.form-wrap{display:flex;flex-direction:column;gap:16px;}
-.form-h{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--ink);margin-bottom:4px;}
-.fg label{display:block;font-size:.6rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-.fg input,.fg textarea{width:100%;border:none;border-bottom:1.5px solid var(--line2);padding:10px 0;font-size:.86rem;color:var(--ink);background:transparent;font-family:'DM Sans',sans-serif;font-weight:300;outline:none;transition:border-color .2s,color .4s;}
-.fg input:focus,.fg textarea:focus{border-color:var(--ink);}
-.fg textarea{resize:none;height:86px;}
-.form-btn{align-self:flex-start;background:var(--ink);color:var(--bg);padding:12px 30px;border-radius:4px;font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s,background .4s,color .4s;margin-top:4px;}
-.form-btn:hover{opacity:.75;}
+.c-item:last-child{border-bottom:none;}
+/* (Form section removed) */
+
+/* REFERENCE CARDS */
+.ref-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s,box-shadow .3s;}
+.ref-card:hover{box-shadow:var(--shadow-h);border-color:var(--line2);}
+.ref-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.ref-name{font-size:1rem;font-weight:500;color:var(--ink);}
+.ref-name a{color:var(--ink);text-decoration:none;transition:color .2s;}
+.ref-name a:hover{color:var(--acc);}
+.ref-title{font-size:.72rem;color:var(--muted);line-height:1.5;}
+.ref-text{font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;}
+.ref-text+.ref-text{margin-top:10px;}
 
 footer{background:var(--bg3);border-top:1px solid var(--line);padding:22px 48px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,border-color .4s;}
 footer p{font-size:.68rem;color:var(--muted);letter-spacing:.06em;}
@@ -196,7 +182,7 @@ footer a{color:var(--ink2);text-decoration:none;font-size:.68rem;letter-spacing:
 footer a:hover{color:var(--ink);}
 
 @media(max-width:1024px){
-  .hero-inner,.about-grid,.contact-grid,.cert-layout,.edu-grid{grid-template-columns:1fr;}
+  .hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr;}
   .hero-sidebar{display:none;}
   .hero-right{display:flex;justify-content:center;height:auto;margin-top:20px;}
   .photo-wrap{width:260px;height:360px;}
@@ -209,7 +195,6 @@ footer a:hover{color:var(--ink);}
   .tl-item:nth-child(odd),.tl-item:nth-child(even){flex-direction:row;padding-right:0;padding-left:60px;text-align:left;}
   .tl-icon{left:20px;}
   .tl-item:nth-child(odd) .tl-body::after,.tl-item:nth-child(even) .tl-body::after{left:-10px;right:auto;border-left:0;border-right:10px solid var(--card);border-top:10px solid transparent;border-bottom:10px solid transparent;}
-  .cert-grid{grid-template-columns:1fr;}
   .nav-links{display:none;}
   .sec-w,.nav-w,footer{padding-left:24px;padding-right:24px;}
   .hero-left{padding:30px 0;}
@@ -292,7 +277,7 @@ footer a:hover{color:var(--ink);}
       <div class="hero-role">HR & Operations Manager</div>
       <p class="hero-tagline">Strategic HR leader with 10+ years of experience building high-performing teams, shaping people culture, and driving operational excellence across tech and non-tech organizations.</p>
       <div class="hero-btns">
-        <a href="mailto:prgyashrstha@gmail.com" class="btn-cv"><span class="btn-cv-dash"></span>Get in Touch</a>
+        <a href="#contact" class="btn-cv"><span class="btn-cv-dash"></span>Get in Touch</a>
       </div>
     </div>
     <div class="hero-right">
@@ -306,7 +291,7 @@ footer a:hover{color:var(--ink);}
         </div>
       </div>
       <div class="hero-sidebar">
-        <a class="sidebar-link" href="https://linkedin.com/in/shrpragya" target="_blank">LinkedIn</a>
+        <a class="sidebar-link" href="https://linkedin.com/in/shrpragya" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <div class="sidebar-rule"></div>
         <a class="sidebar-link" href="mailto:prgyashrstha@gmail.com">Email</a>
       </div>
@@ -417,7 +402,7 @@ footer a:hover{color:var(--ink);}
           <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">HR & Operation Manager</div>
-            <div class="tl-co"><a href="http://portpro.io?utm_source=social&utm_medium=linkedin-company&utm_campaign=linkedin-profile" target="_blank" style="color:var(--acc);text-decoration:none;">PortPro</a> · Full-time</div>
+            <div class="tl-co"><a href="http://portpro.io?utm_source=social&utm_medium=linkedin-company&utm_campaign=linkedin-profile" target="_blank" rel="noopener noreferrer" style="color:var(--acc);text-decoration:none;">PortPro</a> · Full-time</div>
             <span class="tl-badge">Current</span>
             <div class="tl-desc">
               <ul>
@@ -435,7 +420,7 @@ footer a:hover{color:var(--ink);}
           <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">Sr. People Ops Officer & Talent Acquisition Executive</div>
-            <div class="tl-co"><a href="https://outside.studio/" target="_blank" style="color:var(--acc);text-decoration:none;">Outside</a> · Full-time · Jul 2021 – Sep 2023</div>
+            <div class="tl-co"><a href="https://outside.studio/" target="_blank" rel="noopener noreferrer" style="color:var(--acc);text-decoration:none;">Outside</a> · Full-time · Jul 2021 – Sep 2023</div>
             <span class="tl-badge">2 yrs 3 mos</span>
             <div class="tl-desc">
               <ul>
@@ -453,7 +438,7 @@ footer a:hover{color:var(--ink);}
           <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">HR and Finance Officer</div>
-            <div class="tl-co"><a href="https://www.linkedin.com/company/bitsbeat-it-solution/about/" target="_blank" style="color:var(--acc);text-decoration:none;">BitsBeat IT Solution Pvt. Ltd.</a> · Oct 2018 – Feb 2021</div>
+            <div class="tl-co"><a href="https://www.linkedin.com/company/bitsbeat-it-solution/about/" target="_blank" rel="noopener noreferrer" style="color:var(--acc);text-decoration:none;">BitsBeat IT Solution Pvt. Ltd.</a> · Oct 2018 – Feb 2021</div>
             <span class="tl-badge">2 yrs 5 mos</span>
             <div class="tl-desc">
               <ul>
@@ -471,7 +456,7 @@ footer a:hover{color:var(--ink);}
           <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">Operation Assistant</div>
-            <div class="tl-co"><a href="http://www.rebala.com/" target="_blank" style="color:var(--acc);text-decoration:none;">Rebala Remote Services Pvt. Ltd.</a> · Nov 2013 – Feb 2016</div>
+            <div class="tl-co"><a href="http://www.rebala.com/" target="_blank" rel="noopener noreferrer" style="color:var(--acc);text-decoration:none;">Rebala Remote Services Pvt. Ltd.</a> · Nov 2013 – Feb 2016</div>
             <span class="tl-badge">2 yrs 4 mos · Kathmandu</span>
             <div class="tl-desc">
               <ul>
@@ -544,69 +529,69 @@ footer a:hover{color:var(--ink);}
     <h2 class="sec-h">Professional <em>References</em></h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;">
 
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="ref-card">
+        <div class="ref-header">
           <div>
-            <div style="font-size:1rem;font-weight:500;color:var(--ink);"><a href="https://www.linkedin.com/in/bikram-basnet-923778b4/" target="_blank" style="color:var(--ink);text-decoration:none;">Bikram Basnet</a></div>
-            <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Vice President - PortPro · Managed Pragya directly</div>
+            <div class="ref-name"><a href="https://www.linkedin.com/in/bikram-basnet-923778b4/" target="_blank" rel="noopener noreferrer">Bikram Basnet</a></div>
+            <div class="ref-title">Vice President - PortPro · Managed Pragya directly</div>
           </div>
         </div>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;">I have worked with many HR professionals over the years, but with Pragya, I can confidently say — I've finally found the best.</p>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;margin-top:10px;">Working with her is a refreshing experience. She is incredibly fast, highly practical, and deeply aligned with the needs of both people and the organization. When presented with multiple options, she wastes no time — she quickly chooses the best one with clear reasoning, and it always turns out to be the right move.</p>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;margin-top:10px;">Pragya understands people. She knows exactly who she's speaking to, what they expect, and how to communicate effectively. Because of her, we've been able to attract strong talent, build a well-structured team, and move faster as a company.</p>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;margin-top:10px;">What sets her apart is her fearlessness — she's not limited by her role. If something helps the team, she'll take it on, even if it means venturing outside HR. I wouldn't be surprised if one day she starts coding too, just to better support the team.</p>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;margin-top:10px;">Her presence has brought clarity, speed, and transformation to how we work. Truly, she is one of the most valuable professionals I've worked with.</p>
+        <p class="ref-text">I have worked with many HR professionals over the years, but with Pragya, I can confidently say — I've finally found the best.</p>
+        <p class="ref-text">Working with her is a refreshing experience. She is incredibly fast, highly practical, and deeply aligned with the needs of both people and the organization. When presented with multiple options, she wastes no time — she quickly chooses the best one with clear reasoning, and it always turns out to be the right move.</p>
+        <p class="ref-text">Pragya understands people. She knows exactly who she's speaking to, what they expect, and how to communicate effectively. Because of her, we've been able to attract strong talent, build a well-structured team, and move faster as a company.</p>
+        <p class="ref-text">What sets her apart is her fearlessness — she's not limited by her role. If something helps the team, she'll take it on, even if it means venturing outside HR. I wouldn't be surprised if one day she starts coding too, just to better support the team.</p>
+        <p class="ref-text">Her presence has brought clarity, speed, and transformation to how we work. Truly, she is one of the most valuable professionals I've worked with.</p>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="ref-card">
+        <div class="ref-header">
           <div>
-            <div style="font-size:1rem;font-weight:500;color:var(--ink);"><a href="https://www.linkedin.com/in/ilyssa-rabinowitz/" target="_blank" style="color:var(--ink);text-decoration:none;">Ilyssa Rabinowitz</a></div>
-            <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">SVP of Human Resources at PortPro · Managed Pragya directly</div>
+            <div class="ref-name"><a href="https://www.linkedin.com/in/ilyssa-rabinowitz/" target="_blank" rel="noopener noreferrer">Ilyssa Rabinowitz</a></div>
+            <div class="ref-title">SVP of Human Resources at PortPro · Managed Pragya directly</div>
           </div>
         </div>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;">Pragya is an HR Professional who is a joy to work with.</p>
+        <p class="ref-text">Pragya is an HR Professional who is a joy to work with.</p>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="ref-card">
+        <div class="ref-header">
           <div>
-            <div style="font-size:1rem;font-weight:500;color:var(--ink);"><a href="https://www.linkedin.com/in/sujansh/" target="_blank" style="color:var(--ink);text-decoration:none;">Sujan Shrestha</a></div>
-            <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">CTO at Outside, Head of Engineering at RUCA</div>
+            <div class="ref-name"><a href="https://www.linkedin.com/in/sujansh/" target="_blank" rel="noopener noreferrer">Sujan Shrestha</a></div>
+            <div class="ref-title">CTO at Outside, Head of Engineering at RUCA</div>
           </div>
         </div>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;">I worked with Pragya Shrestha for over two years at Outside. She joined us as a Talent Acquisition Executive and quickly grew into the role of Senior People Ops Officer. During her time with us, she built and helped shaping our HR function from ground up. Pragya not only handled recruitment exceptionally well but also strengthened our operations, compliance, and day-to-day administrative processes.</p>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;margin-top:10px;">She is proactive, dependable, and very easy to work with. Pragya is a great team player, and I highly recommend her for People Ops role.</p>
+        <p class="ref-text">I worked with Pragya Shrestha for over two years at Outside. She joined us as a Talent Acquisition Executive and quickly grew into the role of Senior People Ops Officer. During her time with us, she built and helped shaping our HR function from ground up. Pragya not only handled recruitment exceptionally well but also strengthened our operations, compliance, and day-to-day administrative processes.</p>
+        <p class="ref-text">She is proactive, dependable, and very easy to work with. Pragya is a great team player, and I highly recommend her for People Ops role.</p>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="ref-card">
+        <div class="ref-header">
           <div>
-            <div style="font-size:1rem;font-weight:500;color:var(--ink);"><a href="https://www.linkedin.com/in/mnzel/" target="_blank" style="color:var(--ink);text-decoration:none;">Manzeel Uprety</a></div>
-            <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Lead QA Engineer @ Plerion | CloudSecurity, SIMPLIFIED</div>
+            <div class="ref-name"><a href="https://www.linkedin.com/in/mnzel/" target="_blank" rel="noopener noreferrer">Manzeel Uprety</a></div>
+            <div class="ref-title">Lead QA Engineer @ Plerion | CloudSecurity, SIMPLIFIED</div>
           </div>
         </div>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;">Pragya brought real operational calm to the team. She set crisp cadences for hiring and HR workflows, improved communication between leaders and candidates, and handled sensitive situations with empathy and discretion. Smart, steady, and dependable. She raises the bar for People Ops.</p>
+        <p class="ref-text">Pragya brought real operational calm to the team. She set crisp cadences for hiring and HR workflows, improved communication between leaders and candidates, and handled sensitive situations with empathy and discretion. Smart, steady, and dependable. She raises the bar for People Ops.</p>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="ref-card">
+        <div class="ref-header">
           <div>
-            <div style="font-size:1rem;font-weight:500;color:var(--ink);"><a href="https://www.linkedin.com/in/ayush-mishra-6823294a/" target="_blank" style="color:var(--ink);text-decoration:none;">Ayush Mishra</a></div>
-            <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Group Manager || Product Manager II Consultant</div>
+            <div class="ref-name"><a href="https://www.linkedin.com/in/ayush-mishra-6823294a/" target="_blank" rel="noopener noreferrer">Ayush Mishra</a></div>
+            <div class="ref-title">Group Manager || Product Manager II Consultant</div>
           </div>
         </div>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;">I am pleased to recommend Pragya, who served as our HR professional with exceptional dedication and professionalism. She is remarkably hardworking and consistently demonstrates a strong work ethic in all her responsibilities. What makes Pragya truly outstanding is her genuine ability to listen to colleagues and understand their concerns with patience. Her approachable nature and willingness to support team members made her an invaluable asset to our organization.</p>
+        <p class="ref-text">I am pleased to recommend Pragya, who served as our HR professional with exceptional dedication and professionalism. She is remarkably hardworking and consistently demonstrates a strong work ethic in all her responsibilities. What makes Pragya truly outstanding is her genuine ability to listen to colleagues and understand their concerns with patience. Her approachable nature and willingness to support team members made her an invaluable asset to our organization.</p>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="ref-card">
+        <div class="ref-header">
           <div>
-            <div style="font-size:1rem;font-weight:500;color:var(--ink);"><a href="https://www.linkedin.com/in/lizen-shakya-ab67a2169/" target="_blank" style="color:var(--ink);text-decoration:none;">Lizen Shakya</a></div>
-            <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Nodejs | Javascript | Microservices(gRPC) | .net | NestJs</div>
+            <div class="ref-name"><a href="https://www.linkedin.com/in/lizen-shakya-ab67a2169/" target="_blank" rel="noopener noreferrer">Lizen Shakya</a></div>
+            <div class="ref-title">Nodejs | Javascript | Microservices(gRPC) | .net | NestJs</div>
           </div>
         </div>
-        <p style="font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;">I wholeheartedly recommend Pragya ma'am for her exceptional professionalism, dedication, and kindness. From the very first step of the hiring process to onboarding and beyond, she has been consistently friendly, approachable, and incredibly supportive. Whether it was answering questions, scheduling interviews, or making sure all the paperwork and processes were smooth, Pragya maam made everything feel effortless and stress-free. Her communication is always clear and thoughtful, and it's clear she genuinely cares about the people she works with. Any organization would be lucky to have someone like her leading their HR efforts.</p>
+        <p class="ref-text">I wholeheartedly recommend Pragya ma'am for her exceptional professionalism, dedication, and kindness. From the very first step of the hiring process to onboarding and beyond, she has been consistently friendly, approachable, and incredibly supportive. Whether it was answering questions, scheduling interviews, or making sure all the paperwork and processes were smooth, Pragya maam made everything feel effortless and stress-free. Her communication is always clear and thoughtful, and it's clear she genuinely cares about the people she works with. Any organization would be lucky to have someone like her leading their HR efforts.</p>
       </div>
 
     </div>
@@ -622,14 +607,14 @@ footer a:hover{color:var(--ink);}
     <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;max-width:480px;">
       <div class="c-item" style="padding:18px 24px;"><div class="c-label">Email</div><div class="c-val"><a href="mailto:prgyashrstha@gmail.com">prgyashrstha@gmail.com</a></div></div>
       <div class="c-item" style="padding:18px 24px;"><div class="c-label">Location</div><div class="c-val">Lalitpur, Nepal</div></div>
-      <div class="c-item" style="padding:18px 24px;border-bottom:none;"><div class="c-label">LinkedIn</div><div class="c-val"><a href="https://linkedin.com/in/shrpragya" target="_blank">linkedin.com/in/shrpragya</a></div></div>
+      <div class="c-item" style="padding:18px 24px;"><div class="c-label">LinkedIn</div><div class="c-val"><a href="https://linkedin.com/in/shrpragya" target="_blank" rel="noopener noreferrer">linkedin.com/in/shrpragya</a></div></div>
     </div>
   </div>
 </section>
 
 <footer>
   <p>© 2026 Pragya Shrestha · HR & Ops Professional · Lalitpur, Nepal</p>
-  <a href="https://linkedin.com/in/shrpragya" target="_blank">LinkedIn ↗</a>
+  <a href="https://linkedin.com/in/shrpragya" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
 </footer>
 
 <script>
@@ -643,16 +628,7 @@ tog.addEventListener('change',()=>{
   try{localStorage.setItem('ps-theme',d?'dark':'light');}catch(e){}
 });
 
-const frame = document.getElementById('photoFrame');
-const img = document.createElement('img');
-img.alt = 'Pragya Shrestha';
-img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center 12%;display:block;';
-// Load photo passed from page context
-img.src = window._photoSrc || 'Pragya.jpg';
-img.onerror = function(){
-  frame.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:Cormorant Garamond,serif;font-size:6rem;font-weight:300;color:var(--muted)">PS</div>';
-};
-frame.appendChild(img);
+// Photo loaded via direct img tag in HTML
 </script>
 </body>
 </html>
