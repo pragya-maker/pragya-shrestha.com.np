@@ -166,15 +166,17 @@ section{padding:90px 0;transition:background .4s;}
 /* (Form section removed) */
 
 /* REFERENCE CARDS */
-.ref-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s,box-shadow .3s;}
-.ref-card:hover{box-shadow:var(--shadow-h);border-color:var(--line2);}
-.ref-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
-.ref-name{font-size:1rem;font-weight:500;color:var(--ink);}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px;align-items:start;}
+.ref-card{background:var(--card);border-left:3px solid var(--line2);border-radius:0;padding:24px 28px;transition:background .4s,border-color .4s;}
+.ref-card:hover{border-left-color:var(--acc);}
+.ref-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.ref-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--ink);letter-spacing:.01em;}
 .ref-name a{color:var(--ink);text-decoration:none;transition:color .2s;}
 .ref-name a:hover{color:var(--acc);}
-.ref-title{font-size:.72rem;color:var(--muted);line-height:1.5;}
-.ref-text{font-size:.88rem;line-height:1.78;color:var(--ink2);font-weight:300;}
-.ref-text+.ref-text{margin-top:10px;}
+.ref-title{font-size:.68rem;color:var(--muted);line-height:1.5;letter-spacing:.03em;}
+.ref-text{font-size:.84rem;line-height:1.82;color:var(--ink2);font-weight:300;font-style:italic;}
+.ref-text+.ref-text{margin-top:8px;}
+.ref-quote{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--line2);line-height:1;margin-bottom:8px;}
 
 footer{background:var(--bg3);border-top:1px solid var(--line);padding:22px 48px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,border-color .4s;}
 footer p{font-size:.68rem;color:var(--muted);letter-spacing:.06em;}
@@ -524,75 +526,77 @@ footer a:hover{color:var(--ink);}
 </section>
 
 <!-- REFERENCES -->
-<section id="references" style="background:var(--bg2);">
+<section id="references" style="background:var(--bg);">
   <div class="sec-w">
     <div class="sec-eyebrow">Testimonials</div>
     <h2 class="sec-h">Professional <em>References</em></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;align-items:start;">
+    <div class="ref-grid">
 
       <div class="ref-card">
-        <div class="ref-header">
+        <div class="ref-quote">"</div>
+        <p class="ref-text">I have worked with many HR professionals over the years, but with Pragya, I can confidently say — I've finally found the best. Working with her is a refreshing experience. She is incredibly fast, highly practical, and deeply aligned with the needs of both people and the organization.</p>
+        <p class="ref-text">Pragya understands people. She knows exactly who she's speaking to, what they expect, and how to communicate effectively. Her presence has brought clarity, speed, and transformation to how we work. Truly, she is one of the most valuable professionals I've worked with.</p>
+        <div class="ref-header" style="margin-top:18px;margin-bottom:0;">
           <div>
             <div class="ref-name"><a href="https://www.linkedin.com/in/bikram-basnet-923778b4/" target="_blank" rel="noopener noreferrer">Bikram Basnet</a></div>
-            <div class="ref-title">Vice President - PortPro · Managed Pragya directly</div>
+            <div class="ref-title">Vice President - PortPro</div>
           </div>
         </div>
-        <p class="ref-text">I have worked with many HR professionals over the years, but with Pragya, I can confidently say — I've finally found the best.</p>
-        <p class="ref-text">Working with her is a refreshing experience. She is incredibly fast, highly practical, and deeply aligned with the needs of both people and the organization. When presented with multiple options, she wastes no time — she quickly chooses the best one with clear reasoning, and it always turns out to be the right move.</p>
-        <p class="ref-text">Pragya understands people. She knows exactly who she's speaking to, what they expect, and how to communicate effectively. Because of her, we've been able to attract strong talent, build a well-structured team, and move faster as a company.</p>
-        <p class="ref-text">What sets her apart is her fearlessness — she's not limited by her role. If something helps the team, she'll take it on, even if it means venturing outside HR. I wouldn't be surprised if one day she starts coding too, just to better support the team.</p>
-        <p class="ref-text">Her presence has brought clarity, speed, and transformation to how we work. Truly, she is one of the most valuable professionals I've worked with.</p>
       </div>
 
       <div class="ref-card">
-        <div class="ref-header">
+        <div class="ref-quote">"</div>
+        <p class="ref-text">Pragya is an HR Professional who is a joy to work with.</p>
+        <div class="ref-header" style="margin-top:18px;margin-bottom:0;">
           <div>
             <div class="ref-name"><a href="https://www.linkedin.com/in/ilyssa-rabinowitz/" target="_blank" rel="noopener noreferrer">Ilyssa Rabinowitz</a></div>
-            <div class="ref-title">SVP of Human Resources at PortPro · Managed Pragya directly</div>
+            <div class="ref-title">SVP of Human Resources at PortPro</div>
           </div>
         </div>
-        <p class="ref-text">Pragya is an HR Professional who is a joy to work with.</p>
       </div>
 
       <div class="ref-card">
-        <div class="ref-header">
+        <div class="ref-quote">"</div>
+        <p class="ref-text">I worked with Pragya Shrestha for over two years at Outside. She joined us as a Talent Acquisition Executive and quickly grew into the role of Senior People Ops Officer. She built and helped shaping our HR function from ground up. She is proactive, dependable, and very easy to work with.</p>
+        <div class="ref-header" style="margin-top:18px;margin-bottom:0;">
           <div>
             <div class="ref-name"><a href="https://www.linkedin.com/in/sujansh/" target="_blank" rel="noopener noreferrer">Sujan Shrestha</a></div>
             <div class="ref-title">CTO at Outside, Head of Engineering at RUCA</div>
           </div>
         </div>
-        <p class="ref-text">I worked with Pragya Shrestha for over two years at Outside. She joined us as a Talent Acquisition Executive and quickly grew into the role of Senior People Ops Officer. During her time with us, she built and helped shaping our HR function from ground up. Pragya not only handled recruitment exceptionally well but also strengthened our operations, compliance, and day-to-day administrative processes.</p>
-        <p class="ref-text">She is proactive, dependable, and very easy to work with. Pragya is a great team player, and I highly recommend her for People Ops role.</p>
       </div>
 
       <div class="ref-card">
-        <div class="ref-header">
+        <div class="ref-quote">"</div>
+        <p class="ref-text">Pragya brought real operational calm to the team. She set crisp cadences for hiring and HR workflows, improved communication between leaders and candidates, and handled sensitive situations with empathy and discretion. Smart, steady, and dependable. She raises the bar for People Ops.</p>
+        <div class="ref-header" style="margin-top:18px;margin-bottom:0;">
           <div>
             <div class="ref-name"><a href="https://www.linkedin.com/in/mnzel/" target="_blank" rel="noopener noreferrer">Manzeel Uprety</a></div>
-            <div class="ref-title">Lead QA Engineer @ Plerion | CloudSecurity, SIMPLIFIED</div>
+            <div class="ref-title">Lead QA Engineer @ Plerion</div>
           </div>
         </div>
-        <p class="ref-text">Pragya brought real operational calm to the team. She set crisp cadences for hiring and HR workflows, improved communication between leaders and candidates, and handled sensitive situations with empathy and discretion. Smart, steady, and dependable. She raises the bar for People Ops.</p>
       </div>
 
       <div class="ref-card">
-        <div class="ref-header">
+        <div class="ref-quote">"</div>
+        <p class="ref-text">I am pleased to recommend Pragya, who served as our HR professional with exceptional dedication and professionalism. What makes Pragya truly outstanding is her genuine ability to listen to colleagues and understand their concerns with patience. Her approachable nature made her an invaluable asset to our organization.</p>
+        <div class="ref-header" style="margin-top:18px;margin-bottom:0;">
           <div>
             <div class="ref-name"><a href="https://www.linkedin.com/in/ayush-mishra-6823294a/" target="_blank" rel="noopener noreferrer">Ayush Mishra</a></div>
             <div class="ref-title">Group Manager || Product Manager II Consultant</div>
           </div>
         </div>
-        <p class="ref-text">I am pleased to recommend Pragya, who served as our HR professional with exceptional dedication and professionalism. She is remarkably hardworking and consistently demonstrates a strong work ethic in all her responsibilities. What makes Pragya truly outstanding is her genuine ability to listen to colleagues and understand their concerns with patience. Her approachable nature and willingness to support team members made her an invaluable asset to our organization.</p>
       </div>
 
       <div class="ref-card">
-        <div class="ref-header">
+        <div class="ref-quote">"</div>
+        <p class="ref-text">I wholeheartedly recommend Pragya ma'am for her exceptional professionalism, dedication, and kindness. She has been consistently friendly, approachable, and incredibly supportive. Her communication is always clear and thoughtful, and it's clear she genuinely cares about the people she works with.</p>
+        <div class="ref-header" style="margin-top:18px;margin-bottom:0;">
           <div>
             <div class="ref-name"><a href="https://www.linkedin.com/in/lizen-shakya-ab67a2169/" target="_blank" rel="noopener noreferrer">Lizen Shakya</a></div>
             <div class="ref-title">Nodejs | Javascript | Microservices(gRPC) | .net | NestJs</div>
           </div>
         </div>
-        <p class="ref-text">I wholeheartedly recommend Pragya ma'am for her exceptional professionalism, dedication, and kindness. From the very first step of the hiring process to onboarding and beyond, she has been consistently friendly, approachable, and incredibly supportive. Whether it was answering questions, scheduling interviews, or making sure all the paperwork and processes were smooth, Pragya maam made everything feel effortless and stress-free. Her communication is always clear and thoughtful, and it's clear she genuinely cares about the people she works with. Any organization would be lucky to have someone like her leading their HR efforts.</p>
       </div>
 
     </div>
