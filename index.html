@@ -212,11 +212,48 @@ footer a:hover{color:var(--ink);}
   .cert-grid{grid-template-columns:1fr;}
   .nav-links{display:none;}
   .sec-w,.nav-w,footer{padding-left:24px;padding-right:24px;}
+  .hero-left{padding:30px 0;}
+  .hero-btns{flex-wrap:wrap;gap:16px;}
+  .about-grid{gap:36px;}
+  .about-right{margin-top:0;}
 }
 @media(max-width:600px){
-  section{padding:60px 0;}
+  section{padding:50px 0;}
   .stat-row{grid-template-columns:1fr 1fr;}
   .sk-grid,.exp-cards{grid-template-columns:1fr;}
+  .sec-w,.nav-w,footer{padding-left:16px;padding-right:16px;}
+  .hero-inner{padding:0 16px;gap:24px;}
+  .hero-left{padding:20px 0;}
+  .hero-name .l1,.hero-name .l2{font-size:clamp(2.4rem,10vw,3.6rem);}
+  .hero-tagline{max-width:100%;font-size:.82rem;}
+  .hero-right{margin-top:10px;}
+  .photo-wrap{width:200px;height:280px;}
+  .hero-btns{flex-direction:column;align-items:flex-start;gap:14px;}
+  .about-grid{gap:28px;}
+  .feat-block{padding:16px 18px;}
+  .tl::before{left:16px;}
+  .tl-icon{left:16px;width:40px;height:40px;}
+  .tl-icon svg{width:18px;height:18px;}
+  .tl-item:nth-child(odd),.tl-item:nth-child(even){padding-left:50px;}
+  .tl-item{margin-bottom:30px;}
+  .tl-body{padding:20px;border-radius:10px;}
+  .tl-role{font-size:1.1rem;}
+  .tl-desc{font-size:.8rem;}
+  .exp-header{margin-bottom:36px;}
+  .contact-grid{gap:36px;}
+  .nav-w{padding:0 16px;height:56px;}
+  .nav-logo{font-size:1.3rem;}
+  .nav-cta{padding:7px 16px;font-size:.65rem;}
+  footer{flex-direction:column;gap:8px;text-align:center;}
+}
+@media(max-width:400px){
+  .hero-name .l1,.hero-name .l2{font-size:2.2rem;}
+  .photo-wrap{width:180px;height:250px;}
+  .tl-body{padding:16px;}
+  .tl-item:nth-child(odd),.tl-item:nth-child(even){padding-left:44px;}
+  .tl-icon{left:12px;width:36px;height:36px;}
+  .tl-icon svg{width:16px;height:16px;}
+  .tl::before{left:12px;}
 }
 </style>
 </head>
@@ -505,7 +542,7 @@ footer a:hover{color:var(--ink);}
   <div class="sec-w">
     <div class="sec-eyebrow">Testimonials</div>
     <h2 class="sec-h">Professional <em>References</em></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px;">
 
       <div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:background .4s,border-color .4s;">
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
