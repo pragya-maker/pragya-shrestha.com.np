@@ -110,27 +110,31 @@ section{padding:90px 0;transition:background .4s;}
 
 /* EXPERIENCE */
 #experience{background:var(--bg2);}
-.exp-layout{display:grid;grid-template-columns:260px 1fr;gap:72px;}
-.exp-sticky{position:sticky;top:80px;height:fit-content;}
-.exp-sticky h2{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;line-height:1.2;color:var(--ink);margin:10px 0 12px;}
-.exp-sticky p{font-size:.84rem;line-height:1.74;color:var(--muted);font-weight:300;}
-.tl{display:flex;flex-direction:column;}
-.tl-item{display:flex;gap:20px;border-bottom:1px solid var(--line);padding:24px 0;}
-.tl-item:first-child{padding-top:0;}
-.tl-item:last-child{border-bottom:none;}
-.tl-yr{min-width:106px;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:.92rem;font-weight:300;color:var(--muted);padding-top:4px;}
-.tl-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:6px;flex-shrink:0;}
-.tl-dot{width:8px;height:8px;border-radius:50%;background:var(--ink);flex-shrink:0;transition:background .4s;}
-.tl-vline{width:1px;flex:1;background:var(--line);margin-top:8px;min-height:16px;}
-.tl-item:last-child .tl-vline{display:none;}
-.tl-body{flex:1;}
-.tl-role{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;color:var(--ink);margin-bottom:3px;}
-.tl-co{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.tl-badge{display:inline-block;border:1px solid var(--line2);color:var(--muted);padding:2px 9px;border-radius:3px;font-size:.6rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px;}
-.tl-desc{font-size:.82rem;line-height:1.7;color:var(--ink2);font-weight:300;}
-.tl-desc ul{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:5px;}
-.tl-desc ul li{padding-left:14px;position:relative;}
-.tl-desc ul li::before{content:'—';position:absolute;left:0;color:var(--muted);font-size:.7rem;}
+.exp-header{text-align:center;margin-bottom:60px;}
+.exp-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;color:var(--ink);margin-bottom:10px;}
+.exp-header h2 em{font-style:italic;}
+.exp-header-line{width:50px;height:3px;background:var(--ink);margin:0 auto;border-radius:2px;}
+.tl{position:relative;max-width:1100px;margin:0 auto;padding:20px 0;}
+.tl::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:3px;background:var(--line2);transform:translateX(-50%);border-radius:2px;}
+.tl-item{display:flex;align-items:flex-start;position:relative;margin-bottom:50px;width:100%;}
+.tl-item:last-child{margin-bottom:0;}
+.tl-item:nth-child(odd){flex-direction:row;padding-right:calc(50% + 40px);text-align:right;}
+.tl-item:nth-child(even){flex-direction:row-reverse;padding-left:calc(50% + 40px);text-align:left;}
+.tl-icon{position:absolute;left:50%;top:0;transform:translateX(-50%);width:50px;height:50px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:var(--shadow);}
+.tl-icon svg{width:22px;height:22px;fill:var(--bg);}
+.tl-body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:var(--shadow);transition:background .4s,border-color .4s,box-shadow .3s;position:relative;}
+.tl-body:hover{box-shadow:var(--shadow-h);}
+.tl-item:nth-child(odd) .tl-body::after{content:'';position:absolute;top:16px;right:-10px;width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:10px solid var(--card);}
+.tl-item:nth-child(even) .tl-body::after{content:'';position:absolute;top:16px;left:-10px;width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:10px solid var(--card);}
+.tl-role{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--ink);margin-bottom:4px;}
+.tl-co{font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.tl-co a{color:var(--acc)!important;text-decoration:none;transition:color .2s;}
+.tl-co a:hover{color:var(--ink)!important;}
+.tl-badge{display:inline-block;background:var(--ink);color:var(--bg);padding:5px 16px;border-radius:20px;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;border:none;}
+.tl-desc{font-size:.86rem;line-height:1.75;color:var(--ink2);font-weight:300;}
+.tl-desc ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:8px;}
+.tl-desc ul li{padding-left:18px;position:relative;}
+.tl-desc ul li::before{content:'•';position:absolute;left:0;color:var(--muted);font-size:1rem;line-height:1.6;}
 
 /* EDUCATION & LANGUAGES */
 #education{background:var(--bg);}
@@ -192,16 +196,19 @@ footer a{color:var(--ink2);text-decoration:none;font-size:.68rem;letter-spacing:
 footer a:hover{color:var(--ink);}
 
 @media(max-width:1024px){
-  .hero-inner,.about-grid,.exp-layout,.contact-grid,.cert-layout,.edu-grid{grid-template-columns:1fr;}
+  .hero-inner,.about-grid,.contact-grid,.cert-layout,.edu-grid{grid-template-columns:1fr;}
   .hero-sidebar{display:none;}
   .hero-right{display:flex;justify-content:center;height:auto;margin-top:20px;}
   .photo-wrap{width:260px;height:360px;}
   .exp-badge{display:none;}
-  .exp-sticky{position:static;}
   .exp-cards{grid-template-columns:1fr 1fr;}
   .exp-card:nth-child(2){border-right:none;}
   .exp-card:nth-child(1),.exp-card:nth-child(2){border-bottom:1px solid var(--line);}
   .sk-grid{grid-template-columns:1fr 1fr;}
+  .tl::before{left:20px;}
+  .tl-item:nth-child(odd),.tl-item:nth-child(even){flex-direction:row;padding-right:0;padding-left:60px;text-align:left;}
+  .tl-icon{left:20px;}
+  .tl-item:nth-child(odd) .tl-body::after,.tl-item:nth-child(even) .tl-body::after{left:-10px;right:auto;border-left:0;border-right:10px solid var(--card);border-top:10px solid transparent;border-bottom:10px solid transparent;}
   .cert-grid{grid-template-columns:1fr;}
   .nav-links{display:none;}
   .sec-w,.nav-w,footer{padding-left:24px;padding-right:24px;}
@@ -362,17 +369,15 @@ footer a:hover{color:var(--ink);}
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="sec-w">
-    <div class="exp-layout">
-      <div class="exp-sticky">
-        <div class="sec-eyebrow">Career</div>
-        <h2>Work <em>Experience</em></h2>
-        <p>From telemarketer to HR & Ops Manager — a consistent track record of growth, impact, and increasing responsibility across tech, finance, and people functions.</p>
-      </div>
-      <div class="tl">
+    <div class="exp-header">
+      <div class="sec-eyebrow" style="justify-content:center;">Career</div>
+      <h2>Work <em>Experience</em></h2>
+      <div class="exp-header-line"></div>
+    </div>
+    <div class="tl">
 
         <div class="tl-item">
-          <div class="tl-yr">2024 — Now</div>
-          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-vline"></div></div>
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">HR & Operation Manager</div>
             <div class="tl-co"><a href="http://portpro.io?utm_source=social&utm_medium=linkedin-company&utm_campaign=linkedin-profile" target="_blank" style="color:var(--acc);text-decoration:none;">PortPro</a> · Full-time</div>
@@ -390,8 +395,7 @@ footer a:hover{color:var(--ink);}
         </div>
 
         <div class="tl-item">
-          <div class="tl-yr">2021 — 2023</div>
-          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-vline"></div></div>
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">Sr. People Ops Officer & Talent Acquisition Executive</div>
             <div class="tl-co"><a href="https://outside.studio/" target="_blank" style="color:var(--acc);text-decoration:none;">Outside</a> · Full-time · Jul 2021 – Sep 2023</div>
@@ -409,8 +413,7 @@ footer a:hover{color:var(--ink);}
         </div>
 
         <div class="tl-item">
-          <div class="tl-yr">2018 — 2021</div>
-          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-vline"></div></div>
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">HR and Finance Officer</div>
             <div class="tl-co"><a href="https://www.linkedin.com/company/bitsbeat-it-solution/about/" target="_blank" style="color:var(--acc);text-decoration:none;">BitsBeat IT Solution Pvt. Ltd.</a> · Oct 2018 – Feb 2021</div>
@@ -428,8 +431,7 @@ footer a:hover{color:var(--ink);}
         </div>
 
         <div class="tl-item">
-          <div class="tl-yr">2013 — 2016</div>
-          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-vline"></div></div>
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">Operation Assistant</div>
             <div class="tl-co"><a href="http://www.rebala.com/" target="_blank" style="color:var(--acc);text-decoration:none;">Rebala Remote Services Pvt. Ltd.</a> · Nov 2013 – Feb 2016</div>
@@ -447,8 +449,7 @@ footer a:hover{color:var(--ink);}
         </div>
 
         <div class="tl-item">
-          <div class="tl-yr">2012</div>
-          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-vline"></div></div>
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">Intern</div>
             <div class="tl-co">Nepal Bank Limited · May 2012 – Jul 2012</div>
@@ -464,8 +465,7 @@ footer a:hover{color:var(--ink);}
         </div>
 
         <div class="tl-item">
-          <div class="tl-yr">2009 — 2010</div>
-          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-vline"></div></div>
+          <div class="tl-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg></div>
           <div class="tl-body">
             <div class="tl-role">Telemarketer</div>
             <div class="tl-co">Aptech Computer Education · Jul 2009 – Mar 2010</div>
@@ -481,7 +481,6 @@ footer a:hover{color:var(--ink);}
         </div>
 
       </div>
-    </div>
   </div>
 </section>
 
