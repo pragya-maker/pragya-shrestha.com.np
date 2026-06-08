@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Nepal Income Tax Calculator · Pragya Shrestha</title>
+<meta name="description" content="Estimate Nepal annual income tax across fiscal years, with statutory deductions, SSF, female rebate and take-home pay."/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+[data-theme="light"]{
+  --bg:#F5F3EF;--bg2:#EDE9E3;--bg3:#E4DED6;
+  --card:#FFFFFF;--card2:#F5F3EF;
+  --ink:#1C1A17;--ink2:#4A4540;--muted:#9A9088;
+  --line:#DDD8D0;--line2:#C8C0B4;
+  --acc:#7C6248;--acc-lt:#F0EBE4;--acc-mid:#A0806A;
+  --nav-bg:rgba(245,243,239,.94);
+  --shadow:0 4px 30px rgba(80,60,30,.07);--shadow-h:0 12px 40px rgba(80,60,30,.14);
+}
+[data-theme="dark"]{
+  --bg:#26201A;--bg2:#2E2820;--bg3:#342C24;
+  --card:#332B22;--card2:#26201A;
+  --ink:#F0EAE2;--ink2:#C0B0A0;--muted:#7A6A5A;
+  --line:#3C3028;--line2:#4E3E30;
+  --acc:#D4A882;--acc-lt:rgba(212,168,130,.12);--acc-mid:#D4A882;
+  --nav-bg:rgba(38,32,26,.94);
+  --shadow:0 4px 30px rgba(0,0,0,.3);--shadow-h:0 12px 40px rgba(0,0,0,.45);
+}
+html{scroll-behavior:smooth;font-size:18px;}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--bg);transition:background .4s,color .4s;-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+/* NAV — shared look with the main site */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);transition:background .4s,border-color .4s;}
+.nav-w{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;letter-spacing:.06em;color:var(--ink);text-decoration:none;}
+.nav-links{display:flex;gap:30px;list-style:none;}
+.nav-links a{font-size:.7rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-right{display:flex;align-items:center;gap:18px;}
+.tog{cursor:pointer;position:relative;width:44px;height:24px;flex-shrink:0;}
+.tog input{display:none;}
+.tog-track{position:absolute;inset:0;border-radius:100px;background:var(--line2);transition:background .3s;}
+.tog-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--card);transition:transform .3s;box-shadow:0 1px 4px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;font-size:9px;}
+.tog input:checked~.tog-track{background:var(--acc);}
+.tog input:checked~.tog-knob{transform:translateX(20px);}
+.lang-toggle{display:flex;border:1px solid var(--line2);border-radius:5px;overflow:hidden;}
+.lang-toggle .seg{padding:6px 12px;font-size:.66rem;}
+
+/* PAGE */
+.wrap{max-width:1100px;margin:0 auto;padding:120px 48px 60px;}
+.head{display:flex;align-items:flex-end;gap:18px;margin-bottom:8px;}
+.head h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,5vw,3.4rem);line-height:1.05;color:var(--ink);}
+.subtitle{font-size:.84rem;color:var(--ink2);font-weight:300;margin-bottom:44px;letter-spacing:.02em;}
+
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:34px;box-shadow:var(--shadow);transition:background .4s,border-color .4s;}
+
+/* FORM */
+.field{display:block;margin-bottom:24px;}
+.field>span{display:block;font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.field>span small{text-transform:none;letter-spacing:.02em;font-weight:400;color:var(--muted);opacity:.85;}
+input[type="number"]{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:5px;padding:13px 14px;font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--ink);transition:border-color .2s,background .4s;-moz-appearance:textfield;}
+input[type="number"]:focus{outline:none;border-color:var(--acc-mid);}
+input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+
+.segmented{display:flex;border:1px solid var(--line2);border-radius:6px;overflow:hidden;}
+.seg{flex:1;background:transparent;border:none;border-right:1px solid var(--line2);padding:11px 8px;font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.06em;color:var(--muted);cursor:pointer;transition:background .2s,color .2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.seg:last-child{border-right:none;}
+.seg:hover{color:var(--ink);}
+.seg.active{background:var(--acc);color:#fff;}
+[data-theme="dark"] .seg.active{color:#26201A;}
+.badge{font-style:normal;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.22);padding:2px 6px;border-radius:3px;}
+
+.ded-group{display:flex;flex-direction:column;gap:10px;}
+.ded-row{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.ded-row span{flex:1;font-size:.8rem;color:var(--ink2);font-weight:400;letter-spacing:.01em;}
+.ded-row input{max-width:170px;padding:9px 12px;font-size:.9rem;}
+
+.checkbox{display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-bottom:18px;}
+.checkbox input{margin-top:3px;accent-color:var(--acc);width:16px;height:16px;flex-shrink:0;}
+.checkbox span{font-size:.82rem;color:var(--ink);font-weight:500;}
+.checkbox span small{display:block;font-weight:400;color:var(--muted);font-size:.74rem;margin-top:2px;}
+
+.warn{display:block;font-size:.72rem;color:#B5742A;margin-top:8px;line-height:1.5;}
+[data-theme="dark"] .warn{color:#E0A86A;}
+.info{font-size:.76rem;color:var(--acc);background:var(--acc-lt);border:1px solid var(--line);border-radius:6px;padding:11px 13px;line-height:1.55;margin-top:6px;}
+
+/* RESULT */
+.takehome{text-align:center;padding-bottom:26px;border-bottom:1px solid var(--line);margin-bottom:24px;}
+.takehome .muted{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.takehome strong{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:3rem;line-height:1.1;color:var(--ink);margin:6px 0;}
+.takehome .muted:last-child{text-transform:none;letter-spacing:.02em;font-size:.74rem;}
+
+.summary-grid{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:26px;}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card);font-size:.84rem;color:var(--ink2);}
+.srow span:last-child{font-weight:500;color:var(--ink);}
+.srow.highlight{background:var(--acc-lt);}
+.srow.highlight span{color:var(--acc);font-weight:600;}
+
+.breakdown-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.3rem;color:var(--ink);margin:24px 0 12px;}
+.breakdown{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.breakdown li{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);gap:14px;}
+.breakdown li:last-child{border-bottom:none;}
+.b-left{display:flex;flex-direction:column;gap:2px;}
+.b-label{font-size:.86rem;color:var(--ink);font-weight:500;}
+.b-meta{font-size:.72rem;color:var(--muted);}
+.b-meta.warn{margin-top:0;}
+.b-tax{font-size:.9rem;font-weight:500;color:var(--ink);white-space:nowrap;}
+
+.liability-lines{margin-top:14px;display:flex;flex-direction:column;gap:6px;}
+.lrow{display:flex;justify-content:space-between;font-size:.84rem;color:var(--ink2);}
+.lrow.credit span{color:var(--acc);}
+
+.total-liability{margin-top:24px;padding-top:24px;border-top:2px solid var(--line2);display:flex;justify-content:space-between;align-items:flex-end;gap:18px;}
+.headline-tax .muted,.effective .muted{display:block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.headline-tax strong{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:2.2rem;line-height:1.15;color:var(--ink);margin:4px 0;}
+.headline-tax .muted:last-child{text-transform:none;letter-spacing:.02em;}
+.effective{text-align:right;}
+.effective strong{display:block;font-size:1.4rem;font-weight:600;color:var(--acc);margin-top:4px;}
+
+.empty{text-align:center;padding:70px 20px;color:var(--muted);}
+.empty-icon{font-family:'Cormorant Garamond',serif;font-size:3.4rem;color:var(--line2);margin-bottom:16px;}
+.empty p{font-size:.9rem;}
+
+.notes{max-width:1100px;margin:36px auto 0;padding:0 48px;}
+.notes p{font-size:.72rem;color:var(--muted);line-height:1.7;margin-bottom:6px;}
+.notes a{color:var(--ink2);}
+
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .wrap{padding:100px 20px 48px;}
+  .notes{padding:0 20px;}
+  .card{padding:26px;}
+  .ded-row{flex-wrap:wrap;}
+  .ded-row input{max-width:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-w">
+    <a href="/" class="nav-logo">P · S</a>
+    <ul class="nav-links">
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#expertise">Expertise</a></li>
+      <li><a href="/#experience">Experience</a></li>
+      <li><a href="/#references">References</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle" id="langToggle">
+        <button class="seg" data-lang="en">EN</button>
+        <button class="seg active" data-lang="ne">ने</button>
+      </div>
+      <label class="tog" title="Toggle theme">
+        <input type="checkbox" id="themeToggle"/>
+        <div class="tog-track"></div>
+        <div class="tog-knob" id="togKnob">☀️</div>
+      </label>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="head">
+    <h1 id="pageTitle"></h1>
+  </div>
+  <p class="subtitle" id="pageSubtitle"></p>
+
+  <div class="layout">
+    <section class="card" id="formCard"></section>
+    <section class="card" id="resultCard"></section>
+  </div>
+</div>
+
+<div class="notes">
+  <p id="yearNote"></p>
+  <p id="guidance"></p>
+</div>
+
+<script>
+/* ============================== TAX LOGIC ============================== */
+const TAX_YEARS = {
+  '2083/84': {
+    label: 'FY 2083/84 (2026/27)',
+    labelNe: 'आ.व. २०८३/८४ (२०२६/२७)',
+    badge: true,
+    marriedDiffers: false,
+    note: 'New FY 2083/84 budget (announced 29 May 2026). Exemption raised to Rs 10 lakh, top rate cut to 29%. A separate married-couple threshold has not been published yet — single and married use the same bands here pending the Finance Bill.',
+    noteNe: 'नयाँ आ.व. २०८३/८४ बजेट (२९ मे २०२६ मा घोषित)। छुट सीमा रु १० लाख पुर्‍याइएको र अधिकतम दर २९% मा झारिएको। विवाहित जोडीको छुट्टै सीमा अझै प्रकाशित नभएकोले यहाँ एकल र विवाहित दुवैमा उही दर लागू गरिएको।',
+    slabs: {
+      single: [
+        { size: 1000000, rate: 0.01, kind: 'first' },
+        { size: 500000, rate: 0.10, kind: 'next' },
+        { size: 1000000, rate: 0.20, kind: 'next' },
+        { size: 1500000, rate: 0.27, kind: 'next' },
+        { size: Infinity, rate: 0.29, kind: 'above' },
+      ],
+      married: [
+        { size: 1000000, rate: 0.01, kind: 'first' },
+        { size: 500000, rate: 0.10, kind: 'next' },
+        { size: 1000000, rate: 0.20, kind: 'next' },
+        { size: 1500000, rate: 0.27, kind: 'next' },
+        { size: Infinity, rate: 0.29, kind: 'above' },
+      ],
+    },
+  },
+  '2082/83': {
+    label: 'FY 2082/83 (2025/26)',
+    labelNe: 'आ.व. २०८२/८३ (२०२५/२६)',
+    badge: false,
+    marriedDiffers: true,
+    note: 'FY 2082/83 slabs (unchanged from FY 2081/82).',
+    noteNe: 'आ.व. २०८२/८३ का दरहरू (आ.व. २०८१/८२ बाटै अपरिवर्तित)।',
+    slabs: {
+      single: [
+        { size: 500000, rate: 0.01, kind: 'first' },
+        { size: 200000, rate: 0.10, kind: 'next' },
+        { size: 300000, rate: 0.20, kind: 'next' },
+        { size: 1000000, rate: 0.30, kind: 'next' },
+        { size: 3000000, rate: 0.36, kind: 'next' },
+        { size: Infinity, rate: 0.39, kind: 'above' },
+      ],
+      married: [
+        { size: 600000, rate: 0.01, kind: 'first' },
+        { size: 200000, rate: 0.10, kind: 'next' },
+        { size: 300000, rate: 0.20, kind: 'next' },
+        { size: 900000, rate: 0.30, kind: 'next' },
+        { size: 3000000, rate: 0.36, kind: 'next' },
+        { size: Infinity, rate: 0.39, kind: 'above' },
+      ],
+    },
+  },
+};
+
+const DEFAULT_YEAR = '2083/84';
+
+const DEDUCTION_LIMITS = { retirement: 500000, lifeInsurance: 40000, healthInsurance: 20000 };
+
+const clamp = (n) => (Number.isFinite(n) && n > 0 ? n : 0);
+
+function computeDeductions({ epf = 0, cit = 0, ssf = 0, lifeInsurance = 0, healthInsurance = 0, assessableIncome = 0 } = {}) {
+  const contributesSSF = clamp(ssf) > 0;
+  const retirementContrib = clamp(epf) + clamp(cit) + clamp(ssf);
+  const ceiling = DEDUCTION_LIMITS.retirement;
+  const oneThird = clamp(assessableIncome) / 3;
+  const retirementAllowed = Math.min(retirementContrib, ceiling, oneThird);
+  const lifeAllowed = Math.min(clamp(lifeInsurance), DEDUCTION_LIMITS.lifeInsurance);
+  const healthAllowed = Math.min(clamp(healthInsurance), DEDUCTION_LIMITS.healthInsurance);
+  return {
+    contributesSSF, retirementContrib, retirementAllowed, retirementCeiling: ceiling,
+    retirementCapped: retirementAllowed < retirementContrib,
+    lifeAllowed, lifeCapped: lifeAllowed < clamp(lifeInsurance),
+    healthAllowed, healthCapped: healthAllowed < clamp(healthInsurance),
+    total: retirementAllowed + lifeAllowed + healthAllowed,
+  };
+}
+
+function calculateTax({ annualIncome, deductions = 0, status = 'single', ssfExempt = false, female = false, year = DEFAULT_YEAR }) {
+  const gross = clamp(annualIncome);
+  const ded = Math.min(clamp(deductions), gross);
+  const taxableIncome = Math.max(0, gross - ded);
+  const yearDef = TAX_YEARS[year] || TAX_YEARS[DEFAULT_YEAR];
+  const slabs = yearDef.slabs[status] || yearDef.slabs.single;
+
+  let remaining = taxableIncome, totalTax = 0, cumulative = 0;
+  const breakdown = [];
+  slabs.forEach((slab, i) => {
+    if (remaining > 0) {
+      const taxedAmount = Math.min(remaining, slab.size);
+      const rate = i === 0 && ssfExempt ? 0 : slab.rate;
+      const tax = taxedAmount * rate;
+      const amount = slab.kind === 'above' ? cumulative : slab.size;
+      breakdown.push({ kind: slab.kind, amount, rate, taxedAmount, tax });
+      totalTax += tax;
+      remaining -= taxedAmount;
+    }
+    if (slab.size !== Infinity) cumulative += slab.size;
+  });
+
+  const taxBeforeRebate = totalTax;
+  const femaleRebate = female && status === 'single' ? taxBeforeRebate * 0.1 : 0;
+  const finalTax = taxBeforeRebate - femaleRebate;
+  const effectiveRate = taxableIncome > 0 ? finalTax / taxableIncome : 0;
+  return { taxableIncome, taxBeforeRebate, femaleRebate, totalTax: finalTax, effectiveRate, breakdown };
+}
+
+const formatMoney = (n, lang = 'en') =>
+  (lang === 'ne' ? 'रु ' : 'Rs ') + Math.round(n).toLocaleString('en-IN', { maximumFractionDigits: 0 });
+
+/* ============================== I18N ============================== */
+const T = {
+  en: {
+    langName: 'EN', title: 'Nepal Income Tax Calculator',
+    subtitle: 'Estimate your annual income tax across fiscal years',
+    fiscalYear: 'Fiscal year', newBudget: 'New budget', yearly: 'Yearly', monthly: 'Monthly',
+    incomeLabel: (p) => `${p} income (NPR)`, deductionsLabel: (p) => `${p} deductions (NPR)`,
+    deductionsHint: 'statutory caps applied automatically',
+    filingStatus: 'Filing status', single: 'Single', married: 'Married (couple)',
+    marriedWarn: (y) => `Married threshold not yet published for ${y} — using the single-filer bands.`,
+    female: 'Female taxpayer', femaleHint: '10% rebate on tax liability — individual filing, employment income',
+    femaleRebate: 'Female rebate (10%)',
+    femaleCoupleNote: 'The 10% female rebate is not allowed under couple (married) assessment.',
+    ssfInfo: 'SSF contributor detected — the 1% Social Security Tax on the first band is waived.',
+    totalTaxLiability: 'Total tax liability', perMonth: '/ month', effectiveRate: 'Effective rate',
+    grossIncome: 'Gross income (yearly)', deductionsAllowed: 'Deductions allowed', taxableIncome: 'Taxable income',
+    incomeTax: 'Income tax', fundContrib: 'Fund contributions (EPF/CIT/SSF)', annualTakeHome: 'Annual take-home',
+    monthlyTakeHome: 'Monthly take-home in bank',
+    perYearAfter: (x) => `${x} / year · after tax & fund contributions`,
+    deductionsApplied: 'Deductions applied (yearly)',
+    retirement: 'Retirement (EPF + CIT + SSF)', retirementCap: (c) => `capped at ${c} / ⅓ of income`,
+    lifeInsuranceRow: 'Life insurance', lifeCap: (c) => `capped at ${c}`,
+    healthInsuranceRow: 'Health insurance', healthCap: (c) => `capped at ${c}`,
+    slabBreakdown: 'Slab breakdown', bandMeta: (rate, amt) => `${rate}% on ${amt}`,
+    emptyPrompt: 'Enter your income to see the tax breakdown.',
+    guidance: 'For guidance only — verify with a tax professional or the Inland Revenue Department.',
+    deductionFields: {
+      epf: 'EPF / Provident Fund', cit: 'CIT (Citizen Investment Trust)', ssf: 'SSF (Social Security Fund)',
+      lifeInsurance: 'Life insurance premium', healthInsurance: 'Health insurance premium',
+    },
+    band: { first: (a) => `First ${a}`, next: (a) => `Next ${a}`, above: (a) => `Above ${a}` },
+  },
+  ne: {
+    langName: 'ने', title: 'नेपाल आयकर क्याल्कुलेटर',
+    subtitle: 'विभिन्न आर्थिक वर्षको वार्षिक आयकर अनुमान गर्नुहोस्',
+    fiscalYear: 'आर्थिक वर्ष', newBudget: 'नयाँ बजेट', yearly: 'वार्षिक', monthly: 'मासिक',
+    incomeLabel: (p) => `${p} आय (रु)`, deductionsLabel: (p) => `${p} छुट (रु)`,
+    deductionsHint: 'कानुनी सीमा स्वतः लागू',
+    filingStatus: 'कर दाखिला स्थिति', single: 'एकल', married: 'विवाहित (जोडी)',
+    marriedWarn: (y) => `${y} का लागि विवाहितको छुट्टै सीमा अझै प्रकाशित भएको छैन — एकलकै दर प्रयोग गरिएको।`,
+    female: 'महिला करदाता', femaleHint: 'कर दायित्वमा १०% छुट — एकल दाखिला, पारिश्रमिक आय',
+    femaleRebate: 'महिला छुट (१०%)',
+    femaleCoupleNote: 'विवाहित (जोडी) दाखिलामा १०% महिला छुट लागू हुँदैन।',
+    ssfInfo: 'SSF योगदानकर्ता पत्ता लाग्यो — पहिलो खण्डको १% सामाजिक सुरक्षा कर छुट गरिएको।',
+    totalTaxLiability: 'कुल कर दायित्व', perMonth: '/ महिना', effectiveRate: 'प्रभावकारी दर',
+    grossIncome: 'कुल आय (वार्षिक)', deductionsAllowed: 'स्वीकृत छुट', taxableIncome: 'करयोग्य आय',
+    incomeTax: 'आयकर', fundContrib: 'कोष योगदान (EPF/CIT/SSF)', annualTakeHome: 'वार्षिक हातमा आउने',
+    monthlyTakeHome: 'बैंकमा मासिक हातमा आउने',
+    perYearAfter: (x) => `${x} / वर्ष · कर र कोष योगदान कटाएपछि`,
+    deductionsApplied: 'लागू भएको छुट (वार्षिक)',
+    retirement: 'अवकाश (EPF + CIT + SSF)', retirementCap: (c) => `सीमा ${c} / आयको ⅓`,
+    lifeInsuranceRow: 'जीवन बीमा', lifeCap: (c) => `सीमा ${c}`,
+    healthInsuranceRow: 'स्वास्थ्य बीमा', healthCap: (c) => `सीमा ${c}`,
+    slabBreakdown: 'दर विवरण', bandMeta: (rate, amt) => `${amt} मा ${rate}%`,
+    emptyPrompt: 'कर विवरण हेर्न आफ्नो आय प्रविष्ट गर्नुहोस्।',
+    guidance: 'यो सूचनाको लागि मात्र हो — कर विज्ञ वा आन्तरिक राजस्व विभागसँग पुष्टि गर्नुहोस्।',
+    deductionFields: {
+      epf: 'EPF / सञ्चय कोष', cit: 'CIT (नागरिक लगानी कोष)', ssf: 'SSF (सामाजिक सुरक्षा कोष)',
+      lifeInsurance: 'जीवन बीमा प्रिमियम', healthInsurance: 'स्वास्थ्य बीमा प्रिमियम',
+    },
+    band: { first: (a) => `पहिलो ${a}`, next: (a) => `अर्को ${a}`, above: (a) => `${a} माथि` },
+  },
+};
+
+/* ============================== STATE & RENDER ============================== */
+const DEDUCTION_KEYS = ['epf', 'cit', 'ssf', 'lifeInsurance', 'healthInsurance'];
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const state = {
+  lang: 'ne', income: '', period: 'yearly', status: 'single', female: false, year: DEFAULT_YEAR,
+  ded: { epf: '', cit: '', ssf: '', lifeInsurance: '', healthInsurance: '' },
+};
+
+function render() {
+  const t = T[state.lang];
+  const money = (n) => formatMoney(n, state.lang);
+  const periodLabel = state.period === 'yearly' ? t.yearly : t.monthly;
+  const factor = state.period === 'yearly' ? 1 : 12;
+  const annualIncome = (parseFloat(state.income) || 0) * factor;
+  const annual = (v) => (parseFloat(v) || 0) * factor;
+
+  const dr = computeDeductions({
+    epf: annual(state.ded.epf), cit: annual(state.ded.cit), ssf: annual(state.ded.ssf),
+    lifeInsurance: annual(state.ded.lifeInsurance), healthInsurance: annual(state.ded.healthInsurance),
+    assessableIncome: annualIncome,
+  });
+  const ssfExempt = dr.contributesSSF;
+  const result = calculateTax({ annualIncome, deductions: dr.total, status: state.status, ssfExempt, female: state.female, year: state.year });
+
+  const annualContrib = dr.retirementContrib;
+  const takeHomeAnnual = Math.max(0, annualIncome - result.totalTax - annualContrib);
+  const takeHomeMonthly = takeHomeAnnual / 12;
+  const hasInput = annualIncome > 0;
+  const yearDef = TAX_YEARS[state.year];
+  const yearLabel = state.lang === 'ne' ? yearDef.labelNe : yearDef.label;
+
+  /* ---- header / notes ---- */
+  document.getElementById('pageTitle').textContent = t.title;
+  document.getElementById('pageSubtitle').textContent = t.subtitle;
+  document.getElementById('yearNote').textContent = state.lang === 'ne' ? yearDef.noteNe : yearDef.note;
+  document.getElementById('guidance').textContent = t.guidance;
+  document.title = t.title + ' · Pragya Shrestha';
+  document.querySelectorAll('#langToggle .seg').forEach((b) =>
+    b.classList.toggle('active', b.dataset.lang === state.lang));
+
+  /* ---- form ---- */
+  const yearBtns = Object.entries(TAX_YEARS).map(([key, def]) =>
+    `<button class="seg ${state.year === key ? 'active' : ''}" data-year="${key}">${key}${def.badge ? `<em class="badge">${t.newBudget}</em>` : ''}</button>`).join('');
+
+  const periodBtns = ['yearly', 'monthly'].map((key) =>
+    `<button class="seg ${state.period === key ? 'active' : ''}" data-period="${key}">${key === 'yearly' ? t.yearly : t.monthly}</button>`).join('');
+
+  const dedRows = DEDUCTION_KEYS.map((key) =>
+    `<label class="ded-row"><span>${t.deductionFields[key]}</span>
+      <input type="number" inputmode="decimal" min="0" placeholder="0" data-ded="${key}" value="${esc(state.ded[key])}"/></label>`).join('');
+
+  document.getElementById('formCard').innerHTML = `
+    <label class="field"><span>${t.fiscalYear}</span><div class="segmented">${yearBtns}</div></label>
+    <div class="field"><div class="segmented">${periodBtns}</div></div>
+    <label class="field"><span>${t.incomeLabel(periodLabel)}</span>
+      <input type="number" inputmode="decimal" min="0" placeholder="0" id="incomeInput" value="${esc(state.income)}"/></label>
+    <div class="field"><span>${t.deductionsLabel(periodLabel)}<small> — ${t.deductionsHint}</small></span>
+      <div class="ded-group">${dedRows}</div></div>
+    <div class="field"><span>${t.filingStatus}</span>
+      <div class="segmented">
+        <button class="seg ${state.status === 'single' ? 'active' : ''}" data-status="single">${t.single}</button>
+        <button class="seg ${state.status === 'married' ? 'active' : ''}" data-status="married">${t.married}</button>
+      </div>
+      ${state.status === 'married' && !yearDef.marriedDiffers ? `<small class="warn">${t.marriedWarn(state.year)}</small>` : ''}
+    </div>
+    <label class="checkbox"><input type="checkbox" id="femaleCheck" ${state.female ? 'checked' : ''}/>
+      <span>${t.female}<small>${t.femaleHint}</small></span></label>
+    ${state.female && state.status === 'married' ? `<small class="warn">${t.femaleCoupleNote}</small>` : ''}
+    ${ssfExempt ? `<p class="info">${t.ssfInfo}</p>` : ''}
+  `;
+
+  /* ---- result ---- */
+  let resultHTML;
+  if (!hasInput) {
+    resultHTML = `<div class="empty"><div class="empty-icon">रू</div><p>${t.emptyPrompt}</p></div>`;
+  } else {
+    const dedApplied = dr.total > 0 ? `
+      <h2 class="breakdown-title">${t.deductionsApplied}</h2>
+      <ul class="breakdown">
+        ${dedRow(t.retirement, dr.retirementAllowed, dr.retirementCapped, t.retirementCap(money(dr.retirementCeiling)), money)}
+        ${dedRow(t.lifeInsuranceRow, dr.lifeAllowed, dr.lifeCapped, t.lifeCap(money(40000)), money)}
+        ${dedRow(t.healthInsuranceRow, dr.healthAllowed, dr.healthCapped, t.healthCap(money(20000)), money)}
+      </ul>` : '';
+
+    const slabRows = result.breakdown.map((b) => `
+      <li><div class="b-left"><span class="b-label">${t.band[b.kind](money(b.amount))}</span>
+        <span class="b-meta">${t.bandMeta((b.rate * 100).toFixed(0), money(b.taxedAmount))}</span></div>
+        <span class="b-tax">${money(b.tax)}</span></li>`).join('');
+
+    const rebateLines = result.femaleRebate > 0 ? `
+      <div class="liability-lines">
+        <div class="lrow"><span>${t.incomeTax}</span><span>${money(result.taxBeforeRebate)}</span></div>
+        <div class="lrow credit"><span>${t.femaleRebate}</span><span>− ${money(result.femaleRebate)}</span></div>
+      </div>` : '';
+
+    resultHTML = `
+      <div class="takehome">
+        <span class="muted">${t.monthlyTakeHome}</span>
+        <strong>${money(takeHomeMonthly)}</strong>
+        <span class="muted">${t.perYearAfter(money(takeHomeAnnual))}</span>
+      </div>
+      <div class="summary-grid">
+        ${srow(t.grossIncome, money(annualIncome))}
+        ${srow(t.deductionsAllowed, '− ' + money(dr.total))}
+        ${srow(t.taxableIncome, money(result.taxableIncome))}
+        ${srow(t.fundContrib, '− ' + money(annualContrib))}
+        ${srow(t.annualTakeHome, money(takeHomeAnnual), true)}
+      </div>
+      ${dedApplied}
+      <h2 class="breakdown-title">${t.slabBreakdown}</h2>
+      <ul class="breakdown">${slabRows}</ul>
+      ${rebateLines}
+      <div class="total-liability">
+        <div class="headline-tax">
+          <span class="muted">${t.totalTaxLiability} · ${yearLabel}</span>
+          <strong>${money(result.totalTax)}</strong>
+          <span class="muted">${money(result.totalTax / 12)} ${t.perMonth}</span>
+        </div>
+        <div class="effective">
+          <span class="muted">${t.effectiveRate}</span>
+          <strong>${(result.effectiveRate * 100).toFixed(2)}%</strong>
+        </div>
+      </div>`;
+  }
+  document.getElementById('resultCard').innerHTML = resultHTML;
+}
+
+function srow(label, value, highlight) {
+  return `<div class="srow ${highlight ? 'highlight' : ''}"><span>${label}</span><span>${value}</span></div>`;
+}
+function dedRow(label, allowed, capped, note, money) {
+  if (allowed <= 0 && !capped) return '';
+  return `<li><div class="b-left"><span class="b-label">${label}</span>${capped ? `<span class="b-meta warn">${note}</span>` : ''}</div>
+    <span class="b-tax">− ${money(allowed)}</span></li>`;
+}
+
+/* ============================== EVENTS ============================== */
+document.addEventListener('input', (e) => {
+  const el = e.target;
+  if (el.id === 'incomeInput') { state.income = el.value; render(); reFocus('incomeInput', el); }
+  else if (el.dataset.ded) { const k = el.dataset.ded; state.ded[k] = el.value; render(); reFocus(null, null, k); }
+});
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'femaleCheck') { state.female = e.target.checked; render(); }
+});
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  if (b.dataset.year) { state.year = b.dataset.year; render(); }
+  else if (b.dataset.period) { state.period = b.dataset.period; render(); }
+  else if (b.dataset.status) { state.status = b.dataset.status; render(); }
+  else if (b.dataset.lang) { state.lang = b.dataset.lang; try { localStorage.setItem('ps-lang', state.lang); } catch (e) {} render(); }
+});
+
+/* Re-render rebuilds inputs, so restore focus + caret for a smooth typing experience. */
+function reFocus(id, prevEl, dedKey) {
+  let el;
+  if (id) el = document.getElementById(id);
+  else if (dedKey) el = document.querySelector(`[data-ded="${dedKey}"]`);
+  if (el) { const v = el.value.length; el.focus(); try { el.setSelectionRange(v, v); } catch (e) {} }
+}
+
+/* ============================== THEME (synced with main site) ============================== */
+const tog = document.getElementById('themeToggle'), knob = document.getElementById('togKnob'), html = document.documentElement;
+try { if (localStorage.getItem('ps-theme') === 'dark') { html.setAttribute('data-theme', 'dark'); tog.checked = true; knob.textContent = '🌙'; } } catch (e) {}
+tog.addEventListener('change', () => {
+  const d = tog.checked;
+  html.setAttribute('data-theme', d ? 'dark' : 'light');
+  knob.textContent = d ? '🌙' : '☀️';
+  try { localStorage.setItem('ps-theme', d ? 'dark' : 'light'); } catch (e) {}
+});
+try { const l = localStorage.getItem('ps-lang'); if (l === 'en' || l === 'ne') state.lang = l; } catch (e) {}
+
+render();
+</script>
+</body>
+</html>
