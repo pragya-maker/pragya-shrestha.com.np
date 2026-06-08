@@ -42,6 +42,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);bac
 .tog input:checked~.tog-knob{transform:translateX(20px);}
 .nav-cta{background:var(--ink);color:var(--bg);padding:9px 22px;border-radius:4px;font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:opacity .2s,background .4s,color .4s;}
 .nav-cta:hover{opacity:.75;}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s,opacity .3s,background .4s;}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* HERO */
 .hero{min-height:100vh;background:var(--bg);display:flex;align-items:center;padding-top:64px;overflow:hidden;transition:background .4s;}
@@ -198,7 +203,12 @@ footer a:hover{color:var(--ink);}
   .tl-item:nth-child(odd),.tl-item:nth-child(even){flex-direction:row;padding-right:0;padding-left:60px;text-align:left;}
   .tl-icon{left:20px;}
   .tl-item:nth-child(odd) .tl-body::after,.tl-item:nth-child(even) .tl-body::after{left:-10px;right:auto;border-left:0;border-right:10px solid var(--card);border-top:10px solid transparent;border-bottom:10px solid transparent;}
-  .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:6px 24px 14px;transform:translateY(-10px);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:var(--shadow);}
+  nav.open .nav-links{transform:translateY(0);opacity:1;pointer-events:auto;}
+  .nav-links li{width:100%;}
+  .nav-links a{display:block;padding:14px 0;font-size:.78rem;border-bottom:1px solid var(--line);}
+  .nav-links li:last-child a{border-bottom:none;}
   .sec-w,.nav-w,footer{padding-left:24px;padding-right:24px;}
   .hero-left{padding:30px 0;}
   .hero-btns{flex-wrap:wrap;gap:16px;}
@@ -265,6 +275,9 @@ footer a:hover{color:var(--ink);}
         <div class="tog-knob" id="togKnob">☀️</div>
       </label>
       <a href="#contact" class="nav-cta">Contact</a>
+      <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
@@ -635,7 +648,15 @@ tog.addEventListener('change',()=>{
   try{localStorage.setItem('ps-theme',d?'dark':'light');}catch(e){}
 });
 
-// Photo loaded via direct img tag in HTML
+// Mobile menu
+const burger=document.getElementById('navBurger'),navEl=document.querySelector('nav');
+const closeMenu=()=>{navEl.classList.remove('open');burger.classList.remove('open');burger.setAttribute('aria-expanded','false');};
+burger.addEventListener('click',()=>{
+  const open=navEl.classList.toggle('open');
+  burger.classList.toggle('open',open);
+  burger.setAttribute('aria-expanded',open);
+});
+navEl.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',closeMenu));
 </script>
 </body>
 </html>

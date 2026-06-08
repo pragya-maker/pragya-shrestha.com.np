@@ -45,6 +45,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);bac
 .tog input:checked~.tog-knob{transform:translateX(20px);}
 .lang-toggle{display:flex;border:1px solid var(--line2);border-radius:5px;overflow:hidden;}
 .lang-toggle .seg{padding:6px 12px;font-size:.66rem;}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;cursor:pointer;padding:0;}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s,opacity .3s,background .4s;}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* PAGE */
 .wrap{max-width:1100px;margin:0 auto;padding:120px 48px 60px;}
@@ -128,7 +133,12 @@ input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-in
 
 @media(max-width:860px){
   .layout{grid-template-columns:1fr;}
-  .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:6px 24px 14px;transform:translateY(-10px);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:var(--shadow);}
+  nav.open .nav-links{transform:translateY(0);opacity:1;pointer-events:auto;}
+  .nav-links li{width:100%;}
+  .nav-links a{display:block;padding:14px 0;font-size:.78rem;border-bottom:1px solid var(--line);}
+  .nav-links li:last-child a{border-bottom:none;}
   .wrap{padding:100px 20px 48px;}
   .notes{padding:0 20px;}
   .card{padding:26px;}
@@ -158,6 +168,9 @@ input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-in
         <div class="tog-track"></div>
         <div class="tog-knob" id="togKnob">☀️</div>
       </label>
+      <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
@@ -362,7 +375,7 @@ const state = {
   ded: { epf: '', cit: '', ssf: '', lifeInsurance: '', healthInsurance: '' },
 };
 
-function render() {
+function compute() {
   const t = T[state.lang];
   const money = (n) => formatMoney(n, state.lang);
   const periodLabel = state.period === 'yearly' ? t.yearly : t.monthly;
@@ -385,16 +398,20 @@ function render() {
   const yearDef = TAX_YEARS[state.year];
   const yearLabel = state.lang === 'ne' ? yearDef.labelNe : yearDef.label;
 
-  /* ---- header / notes ---- */
-  document.getElementById('pageTitle').textContent = t.title;
-  document.getElementById('pageSubtitle').textContent = t.subtitle;
-  document.getElementById('yearNote').textContent = state.lang === 'ne' ? yearDef.noteNe : yearDef.note;
-  document.getElementById('guidance').textContent = t.guidance;
-  document.title = t.title + ' · Pragya Shrestha';
-  document.querySelectorAll('#langToggle .seg').forEach((b) =>
-    b.classList.toggle('active', b.dataset.lang === state.lang));
+  return { t, money, periodLabel, annualIncome, dr, ssfExempt, result, annualContrib, takeHomeAnnual, takeHomeMonthly, hasInput, yearDef, yearLabel };
+}
 
-  /* ---- form ---- */
+/* Full render: rebuild the form structure AND the result. Use on init and on
+   button/checkbox changes — never on text input (it would destroy the focused
+   field and reset the caret). */
+function render() { const ctx = compute(); renderForm(ctx); renderResult(ctx); }
+
+/* Value-only render: leave the form inputs untouched so typing stays smooth. */
+function renderValues() { renderResult(compute()); }
+
+function renderForm(ctx) {
+  const { t, periodLabel, yearDef, ssfExempt } = ctx;
+
   const yearBtns = Object.entries(TAX_YEARS).map(([key, def]) =>
     `<button class="seg ${state.year === key ? 'active' : ''}" data-year="${key}">${key}${def.badge ? `<em class="badge">${t.newBudget}</em>` : ''}</button>`).join('');
 
@@ -422,8 +439,26 @@ function render() {
     <label class="checkbox"><input type="checkbox" id="femaleCheck" ${state.female ? 'checked' : ''}/>
       <span>${t.female}<small>${t.femaleHint}</small></span></label>
     ${state.female && state.status === 'married' ? `<small class="warn">${t.femaleCoupleNote}</small>` : ''}
-    ${ssfExempt ? `<p class="info">${t.ssfInfo}</p>` : ''}
+    <div id="ssfNotice">${ssfExempt ? `<p class="info">${t.ssfInfo}</p>` : ''}</div>
   `;
+}
+
+function renderResult(ctx) {
+  const { t, money, annualIncome, dr, ssfExempt, result, annualContrib, takeHomeAnnual, takeHomeMonthly, hasInput, yearDef, yearLabel } = ctx;
+
+  /* ---- header / notes ---- */
+  document.getElementById('pageTitle').textContent = t.title;
+  document.getElementById('pageSubtitle').textContent = t.subtitle;
+  document.getElementById('yearNote').textContent = state.lang === 'ne' ? yearDef.noteNe : yearDef.note;
+  document.getElementById('guidance').textContent = t.guidance;
+  document.title = t.title + ' · Pragya Shrestha';
+  document.querySelectorAll('#langToggle .seg').forEach((b) =>
+    b.classList.toggle('active', b.dataset.lang === state.lang));
+
+  /* SSF notice lives in the form but depends on the typed SSF value — update it
+     in place without rebuilding the inputs. */
+  const ssfEl = document.getElementById('ssfNotice');
+  if (ssfEl) ssfEl.innerHTML = ssfExempt ? `<p class="info">${t.ssfInfo}</p>` : '';
 
   /* ---- result ---- */
   let resultHTML;
@@ -493,8 +528,8 @@ function dedRow(label, allowed, capped, note, money) {
 /* ============================== EVENTS ============================== */
 document.addEventListener('input', (e) => {
   const el = e.target;
-  if (el.id === 'incomeInput') { state.income = el.value; render(); reFocus('incomeInput', el); }
-  else if (el.dataset.ded) { const k = el.dataset.ded; state.ded[k] = el.value; render(); reFocus(null, null, k); }
+  if (el.id === 'incomeInput') { state.income = el.value; renderValues(); }
+  else if (el.dataset.ded) { state.ded[el.dataset.ded] = el.value; renderValues(); }
 });
 document.addEventListener('change', (e) => {
   if (e.target.id === 'femaleCheck') { state.female = e.target.checked; render(); }
@@ -508,14 +543,6 @@ document.addEventListener('click', (e) => {
   else if (b.dataset.lang) { state.lang = b.dataset.lang; try { localStorage.setItem('ps-lang', state.lang); } catch (e) {} render(); }
 });
 
-/* Re-render rebuilds inputs, so restore focus + caret for a smooth typing experience. */
-function reFocus(id, prevEl, dedKey) {
-  let el;
-  if (id) el = document.getElementById(id);
-  else if (dedKey) el = document.querySelector(`[data-ded="${dedKey}"]`);
-  if (el) { const v = el.value.length; el.focus(); try { el.setSelectionRange(v, v); } catch (e) {} }
-}
-
 /* ============================== THEME (synced with main site) ============================== */
 const tog = document.getElementById('themeToggle'), knob = document.getElementById('togKnob'), html = document.documentElement;
 try { if (localStorage.getItem('ps-theme') === 'dark') { html.setAttribute('data-theme', 'dark'); tog.checked = true; knob.textContent = '🌙'; } } catch (e) {}
@@ -526,6 +553,17 @@ tog.addEventListener('change', () => {
   try { localStorage.setItem('ps-theme', d ? 'dark' : 'light'); } catch (e) {}
 });
 try { const l = localStorage.getItem('ps-lang'); if (l === 'en' || l === 'ne') state.lang = l; } catch (e) {}
+
+/* Mobile menu */
+const burger = document.getElementById('navBurger'), navEl = document.querySelector('nav');
+burger.addEventListener('click', () => {
+  const open = navEl.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+});
+navEl.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => {
+  navEl.classList.remove('open'); burger.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
+}));
 
 render();
 </script>
