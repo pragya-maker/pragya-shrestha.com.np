@@ -1,0 +1,8 @@
+# Local working files — not part of the published site
+worldcup2026.ics
+ChatGPT Image*.png
+pragya_photo_portrait.jpg
+
+# Editor / tooling state
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
