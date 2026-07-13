@@ -201,6 +201,7 @@ section{padding:90px 0;transition:background .4s;}
 .ref-text+.ref-text{margin-top:8px;}
 .ref-quote{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--line2);line-height:1;margin-bottom:8px;}
 .tool-card:hover{box-shadow:var(--shadow-h);border-color:var(--acc);}
+.ref-card:last-child:nth-child(odd){grid-column:1 / -1;justify-self:center;width:calc(50% - 10px);}
 
 footer{background:var(--bg3);border-top:1px solid var(--line);padding:22px 48px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,border-color .4s;}
 footer p{font-size:.68rem;color:var(--muted);letter-spacing:.06em;}
@@ -238,6 +239,7 @@ footer a:hover{color:var(--ink);}
   section{padding:50px 0;}
   .stat-row{grid-template-columns:1fr 1fr;}
   .sk-grid,.exp-cards,.ref-grid{grid-template-columns:1fr;}
+  .ref-card:last-child:nth-child(odd){grid-column:auto;width:auto;justify-self:stretch;}
   .sec-w,.nav-w,footer{padding-left:16px;padding-right:16px;}
   .hero-inner{padding:0 16px;gap:24px;}
   .hero-left{padding:20px 0;}
@@ -364,9 +366,8 @@ footer a:hover{color:var(--ink);}
           <p>I also bring direct experience in <strong>resource planning for technical teams</strong> and facilitating daily stand-ups, keeping engineering teams aligned and unblocked.</p>
           <p>Lately I'm exploring <strong>how AI can elevate people operations</strong> — from smarter hiring workflows to data-informed engagement — bringing a modern, tech-forward lens to HR.</p>
         </div>
-        <div class="stat-row">
-          <div class="stat-cell"><div class="stat-num">8+</div><div class="stat-lbl">Years Exp.</div></div>
-          <div class="stat-cell"><div class="stat-num">500+</div><div class="stat-lbl">Network</div></div>
+        <div class="stat-row" style="grid-template-columns:1fr;">
+          <div class="stat-cell"><div class="stat-num">8+</div><div class="stat-lbl">Years of Experience</div></div>
         </div>
       </div>
       <div class="about-right">
